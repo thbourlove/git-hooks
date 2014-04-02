@@ -1,0 +1,56 @@
+#!/bin/bash
+# Image file check pre-commit hook for git
+#
+# @author Hongbo Tang <thbourlove@gmail.com>
+
+SUFFIXS=(jpg jpeg png gif svg eot woff ttf)
+
+# stolen from template file
+if git rev-parse --verify HEAD
+then
+    against=HEAD
+else
+    # Initial commit: diff against an empty tree object
+    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+# retrieve all files in staging area that are added, modified or renamed
+# but no deletions etc
+FILES=$(git diff-index --name-only --cached --diff-filter=ACMR $against -- )
+
+if [ "$FILES" == "" ]; then
+    exit 0
+fi
+
+# check files against image suffix
+has_image=0
+
+for FILE in $FILES
+do
+    for SUFFIX in ${SUFFIXS[*]}
+    do
+        echo "$FILE" | egrep -q "\.$SUFFIX$"
+        RETVAL=$?
+        if [ "$RETVAL" -eq "0" ]
+        then
+            echo "image file: $FILE"
+            has_image=1
+        fi
+    done
+done
+
+exec < /dev/tty
+
+if [ "$has_image" -eq "1" ]
+then
+    echo -n "Type 'yes' to confirm this commit [No/yes]: "
+    read confirm
+    if [ "$confirm" == "yes" ]
+    then
+        exit 0
+    else
+        exit 1
+    fi
+else
+    exit 0
+fi
