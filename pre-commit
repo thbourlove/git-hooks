@@ -1,0 +1,22 @@
+#!/bin/bash
+HOOKS="pre-commit-image pre-commit-phpcs"
+###########################################################
+PRE_COMMITS_DIR = "$(dirname $0)/pre-commits"
+
+for hook in $HOOKS
+do
+    echo "Running hook: $hook"
+    # run hook if it exists
+    # if it returns with nonzero exit with 1 and thus abort the commit
+    if [ -f "$PRE_COMMITS_DIR/$hook" ]; then
+        "$PRE_COMMITS_DIR/$hook"
+        if [ $? != 0 ]; then
+            exit 1
+        fi
+    else
+        echo "Error: file $hook not found."
+        echo "Aborting commit. Make sure the hook is in $PRE_COMMITS_DIR and executable."
+        echo "You can skip all pre-commit hooks with --no-verify (not recommended)."
+        exit 1
+    fi
+done
