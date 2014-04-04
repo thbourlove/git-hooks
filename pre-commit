@@ -1,7 +1,14 @@
 #!/bin/bash
+
 HOOKS="pre-commit-image pre-commit-phpcs"
-###########################################################
-PRE_COMMITS_DIR="$(dirname $0)/pre-commits"
+SOURCE=$0
+while [ -h "$SOURCE" ]
+do
+    DIR=$( dirname "$SOURCE" )
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+PRE_COMMITS_DIR="$(dirname $SOURCE)/pre-commits"
 
 for hook in $HOOKS
 do
