@@ -1,7 +1,7 @@
 #!/bin/bash
 HOOKS="pre-commit-image pre-commit-phpcs"
 ###########################################################
-PRE_COMMITS_DIR = "$(dirname $0)/pre-commits"
+PRE_COMMITS_DIR="$(dirname $0)/pre-commits"
 
 for hook in $HOOKS
 do
