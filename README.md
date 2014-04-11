@@ -4,4 +4,4 @@
 
 ### installation
 
-    wget https://raw.githubusercontent.com/thbourlove/git-hooks/master/install -O - | bash
+    curl https://raw.githubusercontent.com/thbourlove/git-hooks/master/install | bash
