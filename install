@@ -3,3 +3,5 @@ mv .git/hooks/pre-commit .git/hooks/pre-commit.bak
 git clone https://github.com/thbourlove/git-hooks.git .git/hooks/git-hooks
 cd .git/hooks
 ln -s git-hooks/pre-commit .
+cd git-hooks
+git checkout zeus2
