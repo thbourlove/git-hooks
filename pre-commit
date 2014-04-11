@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOOKS="pre-commit-image pre-commit-phpcs"
+HOOKS="pre-commit-flake8"
 SOURCE=$0
 while [ -h "$SOURCE" ]
 do
