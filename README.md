@@ -4,4 +4,4 @@
 
 ### installation
 
-    wget https://raw.githubusercontent.com/thbourlove/git-hooks/zeus2/install -O - | bash
+    curl https://raw.githubusercontent.com/thbourlove/git-hooks/zeus2/install | bash
