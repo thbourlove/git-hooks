@@ -9,11 +9,6 @@ TMP_STAGING=".tmp_staging"
 PYTHON_FILE_PATTERN="\.py$"
 PYTHON_FILE_IGNORE="__init__\.py$"
 
-if [ ! -x $FLAKE8_BIN]; then
-    echo "Python Flake8 bin not found or not executable -> $FLAKE8_BIN"
-    exit 1
-fi
-
 # stolen from template file
 if git rev-parse --verify HEAD
 then
