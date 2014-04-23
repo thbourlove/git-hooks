@@ -7,7 +7,7 @@
 FLAKE8_BIN=flake8
 TMP_STAGING=".tmp_staging"
 PYTHON_FILE_PATTERN="\.py$"
-PYTHON_FILE_IGNORE="__init__\.py$"
+PYTHON_FILE_IGNORE="__init__\.py|settings\.py"
 
 # stolen from template file
 if git rev-parse --verify HEAD
