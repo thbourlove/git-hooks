@@ -1,0 +1,42 @@
+#!/bin/bash
+
+z40=0000000000000000000000000000000000000000
+
+commit=""
+while read local_ref local_sha remote_ref remote_sha
+do
+    echo "$local_ref, $local_sha, $remote_ref, $remote_sha"
+    if [ "$local_sha" = $z40 ]
+    then
+        echo ""
+        # Handle delete
+    else
+        if [ "$remote_sha" = $z40 ]
+        then
+            # New branch, examine all commits
+            range="$local_sha ^develop"
+        else
+            # Update to existing branch, examine new commits
+            range="$local_sha ^$remote_sha"
+        fi
+
+        commit=`git diff --name-only $range | grep 'models.py'`
+    fi
+done
+
+exec < /dev/tty
+
+if [ -n "$commit" ]
+then
+    echo -e "\e[0;31mProtential DB schema change, please make sure it's been applied\e[0m"
+    echo -n "Type 'yes' to confirm this commit [No/yes]: "
+    read confirm
+    if [ "$confirm" == "yes" ]
+    then
+        exit 0
+    else
+        exit 1
+    fi
+fi
+
+exit 0
